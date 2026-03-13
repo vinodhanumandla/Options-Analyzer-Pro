@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Options Analyzer Pro — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #070b14;
+      --bg-card: #0d1529;
+      --bg-input: #111827;
+      --border: #1e2d4a;
+      --border-active: #00d4ff;
+      --accent-cyan: #00d4ff;
+      --accent-orange: #ff6b35;
+      --accent-green: #00e676;
+      --text-primary: #e8eaf6;
+      --text-secondary: #8892a4;
+      --text-dim: #4a5568;
+      --danger: #ff4444;
+      --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.3);
+      --glow-orange: 0 0 20px rgba(255, 107, 53, 0.3);
+      --glow-green: 0 0 20px rgba(0, 230, 118, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      overflow-y: auto;
+      overflow-x: hidden;
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0, 212, 255, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(255, 107, 53, 0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(0, 70, 120, 0.08) 0%, transparent 70%);
+      animation: bgpulse 8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes bgpulse {
+      0% {
+        opacity: 0.6;
+      }
+
+      100% {
+        opacity: 1.0;
+      }
+    }
+
+    /* Grid lines */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+      padding: 1rem 1.5rem 2rem;
+    }
+
+    /* ── Header ─────────────────────────── */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.8s ease;
+    }
+
+    .logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 88px;
+      height: 88px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #0d1529, #162040);
+      border: 1.5px solid rgba(0, 212, 255, 0.3);
+      box-shadow: var(--glow-cyan), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+
+    .logo-wrap img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+    }
+
+    .app-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #00d4ff 0%, #7b64ff 50%, #ff6b35 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .app-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.4rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Card ───────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2rem;
+      box-shadow:
+        0 24px 64px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .card-section-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .card-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(0, 212, 255, 0.3), transparent);
+    }
+
+    /* ── Form ───────────────────────────── */
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 0.45rem;
+      letter-spacing: 0.3px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 0.9rem;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--border-active);
+      box-shadow: var(--glow-cyan);
+    }
+
+    input[readonly] {
+      color: var(--text-dim);
+      border-style: dashed;
+      cursor: not-allowed;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--text-dim);
+    }
+
+    /* Password toggle */
+    .input-with-toggle {
+      position: relative;
+    }
+
+    .input-with-toggle input {
+      padding-right: 2.8rem;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0.2rem;
+      transition: color 0.2s;
+    }
+
+    .toggle-btn:hover {
+      color: var(--accent-cyan);
+    }
+
+    /* ── Buttons ────────────────────────── */
+    .btn {
+      width: 100%;
+      padding: 0.85rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      letter-spacing: 0.3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover::before {
+      transform: translateX(0);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00b8d9, #0070a8);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(0, 184, 217, 0.35);
+      margin-bottom: 0.8rem;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 28px rgba(0, 184, 217, 0.5);
+    }
+
+    .btn-connect {
+      background: linear-gradient(135deg, #ff6b35, #c94a1a);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(255, 107, 53, 0.35);
+    }
+
+    .btn-connect:hover {
+      box-shadow: 0 6px 28px rgba(255, 107, 53, 0.5);
+    }
+
+    .btn-disconnect {
+      background: linear-gradient(135deg, #1e2d4a, #263250);
+      color: var(--danger);
+      border: 1.5px solid rgba(255, 68, 68, 0.3);
+    }
+
+    .btn-disconnect:hover {
+      border-color: var(--danger);
+      box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 1.5rem 0;
+    }
+
+    /* Token input area */
+    .token-section {
+      background: rgba(0, 212, 255, 0.03);
+      border: 1px solid rgba(0, 212, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-top: 1.2rem;
+    }
+
+    .token-hint {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .token-hint strong {
+      color: var(--accent-cyan);
+    }
+
+    /* Status badges */
+    .status-connected {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: rgba(0, 230, 118, 0.07);
+      border: 1px solid rgba(0, 230, 118, 0.25);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: var(--glow-green);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+      }
+    }
+
+    .status-text {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--accent-green);
+    }
+
+    .status-name {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 0.1rem;
+    }
+
+    .alert {
+      padding: 0.7rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      margin-top: 0.8rem;
+      display: none;
+    }
+
+    .alert-error {
+      background: rgba(255, 68, 68, 0.1);
+      border: 1px solid rgba(255, 68, 68, 0.3);
+      color: #ff6b6b;
+    }
+
+    .alert-success {
+      background: rgba(0, 230, 118, 0.1);
+      border: 1px solid rgba(0, 230, 118, 0.3);
+      color: #00e676;
+    }
+
+    .alert-info {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      color: #00d4ff;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-wrap">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"
+          onerror="this.style.display='none';this.parentElement.innerHTML='📊'">
+      </div>
+      <h1 class="app-title">Options Analyzer Pro</h1>
+      <p class="app-subtitle">Professional-Grade Market Intelligence Platform</p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="card" id="mainCard">
+
+      <!-- ── Connected State ── -->
+      <div id="connectedState" style="display:none">
+        <div class="status-connected">
+          <div class="status-dot"></div>
+          <div>
+            <div class="status-text">✓ Connected to Fyers</div>
+            <div class="status-name" id="connectedName">—</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="window.location.href='/dashboard'" style="margin-bottom:0.8rem">
+          📊 Open Dashboard
+        </button>
+        <button class="btn btn-disconnect" id="disconnectBtn" onclick="disconnect()">
+          🔌 Disconnect
+        </button>
+      </div>
+
+      <!-- ── Credential Form ── -->
+      <div id="credentialForm">
+        <div class="card-section-title">Fyers API Credentials</div>
+
+        <div class="form-group">
+          <label>App ID (Client ID)</label>
+          <input type="text" id="appId" placeholder="e.g. XY1234-100" autocomplete="off" />
+        </div>
+
+        <div class="form-group">
+          <label>Secret Key</label>
+          <div class="input-with-toggle">
+            <input type="password" id="secretKey" placeholder="Your Fyers secret key" autocomplete="off" />
+            <button class="toggle-btn" onclick="toggleSecret()" id="secretToggle">👁</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Redirect URI</label>
+          <input type="text" id="redirectUri" readonly
+            value="https://trade.fyers.in/api-login/redirect-uri/index.html" />
+        </div>
+
+        <button class="btn btn-primary" id="genTokenBtn" onclick="generateToken()">
+          <span class="spinner" id="genSpinner"></span>
+          <span id="genBtnText">🔑 Generate Access Token</span>
+        </button>
+
+        <div id="genAlert" class="alert"></div>
+
+        <!-- Token paste area (shown after clicking Generate) -->
+        <div class="token-section" id="tokenSection" style="display:none">
+          <div class="card-section-title" style="margin-bottom:0.8rem">Access Token</div>
+          <div class="token-hint">
+            1. A Fyers login page will open in a new tab.<br>
+            2. Log in to your Fyers account. After login you'll be <strong>redirected to a new URL</strong>.<br>
+            3. <strong>Copy that full URL from your browser address bar</strong> and paste it below — OR just paste the
+            <code>auth_code</code> value if you can see it.<br>
+            <span style="color:var(--accent-orange);font-weight:600">Example URL:
+              https://trade.fyers.in/api-login/redirect-uri/index.html?s=ok&amp;auth_code=eyJ...</span>
+          </div>
+          <div class="form-group" style="margin-bottom:0.8rem">
+            <label>Paste Full Redirect URL or Auth Code</label>
+            <textarea id="accessToken" rows="3"
+              placeholder="Paste the full redirect URL or just the auth_code here..."></textarea>
+          </div>
+          <button class="btn btn-connect" id="connectBtn" onclick="connectFyers()">
+            <span class="spinner" id="connectSpinner"></span>
+            <span id="connectBtnText">🔌 Connect to Fyers</span>
+          </button>
+          <div id="connectAlert" class="alert"></div>
+        </div>
+      </div>
+
+    </div><!-- /card -->
+
+    <div class="footer-note">
+      Options Analyzer Pro &nbsp;·&nbsp; Powered by Fyers API v3 &nbsp;·&nbsp; 2025
+    </div>
+  </div>
+
+  <script>
+    // Check if already connected on page load
+    (function () {
+      const connectedState = document.getElementById('connectedState');
+      const credentialForm = document.getElementById('credentialForm');
+      // If server redirects us here, we're not connected
+    })();
+
+    function toggleSecret() {
+      const inp = document.getElementById('secretKey');
+      const btn = document.getElementById('secretToggle');
+      if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+      else { inp.type = 'password'; btn.textContent = '👁'; }
+    }
+
+    function showAlert(id, msg, type = 'error') {
+      const el = document.getElementById(id);
+      el.textContent = msg;
+      el.className = `alert alert-${type}`;
+      el.style.display = 'block';
+      if (type !== 'error') setTimeout(() => el.style.display = 'none', 5000);
+    }
+
+    function setLoading(btnId, spinnerId, textId, loading, text) {
+      const btn = document.getElementById(btnId);
+      document.getElementById(spinnerId).style.display = loading ? 'block' : 'none';
+      document.getElementById(textId).textContent = loading ? 'Please wait...' : text;
+      btn.disabled = loading;
+    }
+
+    async function generateToken() {
+      const appId = document.getElementById('appId').value.trim();
+      const secretKey = document.getElementById('secretKey').value.trim();
+      const redirectUri = document.getElementById('redirectUri').value.trim();
+
+      if (!appId) { showAlert('genAlert', '⚠️ Please enter your App ID first.'); return; }
+      if (!secretKey) { showAlert('genAlert', '⚠️ Please enter your Secret Key first.'); return; }
+
+      setLoading('genTokenBtn', 'genSpinner', 'genBtnText', true, '🔑 Generate Access Token');
+
+      try {
+        const resp = await fetch('/generate-token-url', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ app_id: appId, secret_key: secretKey, redirect_uri: redirectUri })
+        });
+        const data = await resp.json();
+
+        if (data.success) {
+          window.open(data.auth_url, '_blank', 'width=500,height=700');
+          document.getElementById('tokenSection').style.display = 'block';
+          showAlert('genAlert', '✅ Fyers login page opened! After logging in, paste your Access Token below.', 'success');
+        } else {
+          showAlert('genAlert', '❌ ' + data.error);
+        }
+      } catch (e) {
+        showAlert('genAlert', '❌ Network error: ' + e.message);
+      }
+
+      setLoading('genTokenBtn', 'genSpinner', 'genBtnText', false, '🔑 Generate Access Token');
+    }
+
+    async function connectFyers() {
+      const appId = document.getElementById('appId').value.trim();
+      const secretKey = document.getElementById('secretKey').value.trim();
+      const pastedVal = document.getElementById('accessToken').value.trim();
+
+      if (!pastedVal) { showAlert('connectAlert', '⚠️ Please paste the redirect URL or auth code first.'); return; }
+      if (!appId) { showAlert('connectAlert', '⚠️ App ID is required.'); return; }
+
+      setLoading('connectBtn', 'connectSpinner', 'connectBtnText', true, '🔌 Connect to Fyers');
+
+      try {
+        const resp = await fetch('/connect', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ app_id: appId, secret_key: secretKey, access_token: pastedVal })
+        });
+        const data = await resp.json();
+
+        if (data.success) {
+          showAlert('connectAlert', `✅ Connected! Welcome, ${data.name}`, 'success');
+          setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
+        } else {
+          showAlert('connectAlert', '❌ ' + data.error);
+        }
+      } catch (e) {
+        showAlert('connectAlert', '❌ ' + e.message);
+      }
+
+      setLoading('connectBtn', 'connectSpinner', 'connectBtnText', false, '🔌 Connect to Fyers');
+    }
+
+    async function disconnect() {
+      const btn = document.getElementById('disconnectBtn');
+      btn.disabled = true; btn.textContent = 'Disconnecting...';
+      await fetch('/disconnect', { method: 'POST' });
+      window.location.reload();
+    }
+  </script>
+</body>
+
+</html>

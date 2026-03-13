@@ -1,0 +1,26 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment Variables & Secrets
+.env
+firebase-credentials.json
+
+# IDE Settings
+.vscode/
+.idea/
+
+# Logs
+*.log
+flask_error_log.txt
+flask_crash.txt
+
+# OS Files
+.DS_Store
+Thumbs.db
